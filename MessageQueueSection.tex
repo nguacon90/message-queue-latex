@@ -1,0 +1,26 @@
+\section{Message queue}
+\subsection{Định nghĩa}
+Message queue là một thành phần công nghệ phần mềm được sử dụng để giao tiếp giữa các tiến trình xử lý hoặc giữa các luồng trong cùng một tiến trình xử lý.
+
+\subsection{Giao thức trong message queue}
+\begin{itemize}
+\item Message queue cung cấp các giao thức kết nối không đồng bộ (asynchronous communication protocols), có nghĩa là bên gửi (producer) và bên nhận (consumer) không cần phải tương tác với các hàng đợi cùng một lúc. Thông điệp được đặt vào hàng đợi cho đến lúc bên nhận lấy chúng.
+\item Có hai tiêu chuẩn phổ biến được sử dụng trong mã nguồn mở:
+\begin{itemize}
+	\item Advance Message Queuing Protocol (AMQP)
+	\item Standard Text Oriented Messaging Protocol (STOMP)
+\end{itemize}
+\end{itemize}
+
+\subsection{Các hệ thống mã nguồn mở lựa chọn công nghệ message queue}
+
+\begin{itemize}
+	\item Apache ActiveMQ
+	\item RabbitMQ
+	\item ZeroMQ
+	\item Kafka
+	\item Sun Open Message Queue
+	\item Apache QPid
+	\item IronMQ
+	\item ...
+\end{itemize}

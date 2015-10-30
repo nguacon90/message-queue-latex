@@ -1,0 +1,23 @@
+\documentclass[a4paper, 14pt]{article} %documentclass [tuy chon]{tenlop}
+\usepackage[utf8]{vntex}
+\usepackage{titling}
+\usepackage{ragged2e}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+%title of document
+\begin{document}
+\title{Tìm hiểu về công nghệ messaging queue mã nguồn mở}
+\author{Học viên: Tô Quang Minh}
+%create title
+\maketitle
+\flushleft
+\include{MessageQueueSection}
+\include{RabbitMQ}
+\include{ActiveMQ}
+\include{ZeroMQ}
+\include{ApacheKafka}
+\end{document}
