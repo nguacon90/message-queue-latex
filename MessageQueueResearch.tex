@@ -1,10 +1,9 @@
 \documentclass[a4paper, 14pt]{article} %documentclass [tuy chon]{tenlop}
 \usepackage[utf8]{vntex}
 \usepackage{titling}
-\usepackage{enumerate}
-\usepackage{enumitem}
 \usepackage{ragged2e}
-\usepackage{graphicx}
+\usepackage{graphicx} %package to manage images
+\graphicspath{ {images/} }
 \newcommand{\subtitle}[1]{%
   \posttitle{%
     \par\end{center}
@@ -19,7 +18,7 @@
 \maketitle
 \flushleft
 \include{MessageQueueSection}
-\include{ProtocolMQ}
+\include{AMQPProtocol}
 \include{RabbitMQ}
 \include{ActiveMQ}
 \include{ZeroMQ}
