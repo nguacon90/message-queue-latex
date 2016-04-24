@@ -22,7 +22,7 @@
     \centering
     \includegraphics[width=0.3\textwidth]{amqp-stack}
     \caption{Amqp stacks: exchanges, Bindings and Queues}
-    \label{fig:mesh1}
+    \label{fig:amqp-stack}
 \end{figure}
 Là nơi các message được chứa và chờ được các consumers nhận. Consumers có thể nhận các thông điệp từ queue theo một trong hai cách sau:
 \begin{itemize}
@@ -40,18 +40,43 @@ Một số thuộc tính hay dùng cho queue:
 \end{itemize}
 
 \subsubsection{Exhanges và bindings}
-Bất cứ khi nào bạn muốn phân phát message tới queue, thì phải gửi message vào một exchange. Một queue sẽ được gắn (binding) vào exchange bởi một routing key. Exchange sẽ dựa vào routing-key để quyết định queue nào sẽ được phân phát message. \\
-Các loại exchange:
+Bất cứ khi nào bạn muốn phân phát message tới queue, thì phải gửi message vào một exchange. Một queue sẽ được gắn (binding) vào exchange bởi một routing key. Exchange sẽ dựa vào routing-key để quyết định queue nào sẽ được phân phát message. Các loại exchanges: 
+
+\paragraph{Direct exchange:} sẽ phân phát các thông điệp tới các hàng đợi dựa vào routing key. Routing key là một thuộc tính của thông điệp được gán vào trong header của thông điệp khi producer gửi thông điệp. Thông điệp được gửi đến một hàng đợi mà có routing key trùng với routing key của thông điệp (Hình \ref{fig:directExchange}). Trường hợp sử dụng:
+\begin{itemize}
+  \item Direct exchange được sử dụng trong định tuyến đơn hướng thông điệp.
+  \item Direct exchange được sử dụng để phân phối nhiệm vụ giữa nhiều workers theo kiểu round robin (luân chuyển). Việc cân bằng tải này được hiểu giữa các consumers chứ không phải giữa các hàng đợi.
+\end{itemize}
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.3\textwidth]{fanout-exchange}
-    \caption{Fanout exchange message flow}
-    \label{fig:mesh1}
+    \includegraphics[width=0.3\textwidth]{direct-exchange}
+    \caption{Direct exchange message flow}
+    \label{fig:directExchange}
 \end{figure}
 
+
+\paragraph{Topic exchange:} sẽ định tuyến thông điệp đến hàng đợi có routing key trùng hoặc gần đúng mẫu routing key của thông điệp. Do đó, thông điệp được gửi đến một hoặc nhiều hàng đợi có routing key trùng hoặc gần đúng mẫu. Ví dụ về routing key: \textit{agreements.us}, \textit{agreements.eu.stockholm} hoặc theo mẫu \textit{agreements.*.*.b.*} - chỉ chấp nhận routing key với từ bắt đầu là \textbf{agreements} và từ thứ 4 là \textbf{b}; \textit{agreements.eu.berlin.\#} - chấp nhận routing key bắt đầu bằng \textbf{agreements.eu.berlin} (Hình \ref{fig:topicExchange}). Bất cứ khi nào một vấn đề liên quan đến nhiều consumers/appications có chọn lọc loại thông điệp muốn nhận, topic exchange là lựa chọn phù hợp. Một số ca sử dụng thường gặp: 
+\begin{itemize}
+	\item Phân phối các dữ liệu có liên quan đến vị trí địa lý cụ thể, ví dụ, các điểm bán hàng.
+	\item Cập nhật tin tức liên quan đến việc phân loại và gắn nhãn (ví dụ, chỉ cho một môn thể thao hoặc nhóm cụ thể).
+	\item Cập nhật giá cổ phiếu (và cập nhật về các loại dữ liệu tài chính).
+\end{itemize}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.3\textwidth]{topic-exchange}
     \caption{Topic exchange message flow}
-    \label{fig:mesh1}
+    \label{fig:topicExchange}
+\end{figure}
+
+\paragraph{Fanout exchange:} sao chép và phân phát tất cả thông điệp đến tất cả hàng đợi được gán vào exchange mà không cần quan tâm đến routing key như direct hoặc topic exchange. Fanout exchange được sử dụng trong trường hợp cùng một thông điệp cần gửi đến một hoặc nhiều hàng đợi với nhiều consumers xử lý thông điệp theo những cách hác nhau (Hình \ref{fig:fanoutExchange}). Ca sử dụng thường gặp:
+\begin{itemize}
+	\item Các trang web tin tức thể thao có thể sử dụng để phân phối bản cập nhật điểm cho các khách hàng điện thoại di động trong thời gian gần thực.
+	\item Phân phát thông tin cập nhật cổ phiếu cho các ứng dụng như bảng giá, mobile đặt lệnh, vẽ biểu đồ mã chứng khoán thời gian thực.
+\end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\textwidth]{fanout-exchange}
+    \caption{Fanout exchange message flow}
+    \label{fig:fanoutExchange}
 \end{figure}
